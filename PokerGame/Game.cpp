@@ -100,7 +100,11 @@ void Game::announceWinner(vector<Player>& players, vector<CompPlayer>& compPlaye
 	{
 		allPlayers.push_back(compPlayers[i]);
 	}
+	const int ALL_PLAYER_SIZE = allPlayers.size();
+	for (int i = 0; i < ALL_PLAYER_SIZE - 1; ++i)
+	{
 
+	}
 }
 
 void Game::clearPlayersHand(vector<Player>& players)
