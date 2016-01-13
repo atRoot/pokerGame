@@ -31,24 +31,24 @@ Game::~Game()
 
 void Game::play()
 {
-	for (int i = 0; i <2 ; ++i)
+	const int CARD_NUMBER = 2;
+	//for (int i = 0; i <2 ; ++i)
+	//{
+	vector<Player>::iterator player = m_players.begin();
+	for (; player != m_players.end(); ++player)
 	{
-		vector<GeneralPlayer*>::iterator player = m_players.begin();
-		for (; player != m_players.end(); ++player)
-		{
-			m_deck.deal(*(*player));
-		}
-		//m_deck.deal(m_player);
-		//m_deck.deal(m_compPlayer);
+		for (int i = 0; i< CARD_NUMBER; ++i)
+			m_deck.deal(*player);
+		cout << *player << endl;
 	}
-	m_compPlayer.flipCards();
-
-	cout << m_compPlayer << endl;
-	cout << m_player << endl;
-
-
-	//cout << "Press enter to continue"<<endl;
-	//cin.ignore();
+	vector<CompPlayer>::iterator compPlayer = m_compPlayers.begin();
+	for (; compPlayer != m_compPlayers.end(); ++compPlayer)
+	{
+		for (int i = 0; i< CARD_NUMBER; ++i)
+			m_deck.deal(*compPlayer);
+		compPlayer->flipCards();
+		cout << *compPlayer << endl;
+	}
 
 	m_deck.deal();
 	for (int i = 0; i < 3; ++i)
@@ -72,8 +72,12 @@ void Game::play()
 	m_deck.deal(m_table);
 	m_table.additionalCard();
 
-	m_compPlayer.flipCards();
-	cout <<'\n'<< m_compPlayer << endl;
+	compPlayer = m_compPlayers.begin();
+	for (; compPlayer != m_compPlayers.end(); ++compPlayer)
+	{
+		compPlayer->flipCards();
+		cout << '\n' << *compPlayer << endl;
+	}
 
 	compareHands(m_player, m_compPlayer, m_table);
 
