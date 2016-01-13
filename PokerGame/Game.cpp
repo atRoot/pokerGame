@@ -4,17 +4,20 @@
 
 Game::Game(const vector<string>& names)
 {
-	m_players.reserve(4);
-	int i = 0;
-	int playerNumber = 0;
-	for (; i < names.size(); ++i)
+	const int NUMBER_OF_PLAYERS = 4;
+	m_players.reserve(names.size());
+
+	const int COMP_PLAYERS = NUMBER_OF_PLAYERS - names.size();
+	m_compPlayers.reserve(COMP_PLAYERS);
+
+	for (int i =0; i< names.size(); ++i)
 	{
-		m_players.push_back(new Player(names[i]));
+		m_players.push_back(Player(names[i]));
 	}
-	for (; i < 4; ++i)
+	for (int i = 0; i < COMP_PLAYERS; ++i)
 	{
-		string compPlayerName = "Comp player " + std::to_string(++playerNumber);
-		m_players.push_back(new CompPlayer(compPlayerName));
+		string compPlayerName = "Comp player " + std::to_string(++i);
+		m_players.push_back(CompPlayer(compPlayerName));
 	}
 	srand(static_cast<unsigned int>(time(0)));
 	m_deck.reset();
@@ -22,21 +25,21 @@ Game::Game(const vector<string>& names)
 
 Game::~Game()
 {
-	vector<GeneralPlayer*>::iterator iter = m_players.begin(); // important not to make any memory leaks
-	for (; iter != m_players.end(); ++iter)
-	{
-		delete *iter;
-		*iter = 0;
-	}
 	m_players.clear();
+	m_compPlayers.clear();
 }
 
 void Game::play()
 {
 	for (int i = 0; i <2 ; ++i)
 	{
-		m_deck.deal(m_player);
-		m_deck.deal(m_compPlayer);
+		vector<GeneralPlayer*>::iterator player = m_players.begin();
+		for (; player != m_players.end(); ++player)
+		{
+			m_deck.deal(*(*player));
+		}
+		//m_deck.deal(m_player);
+		//m_deck.deal(m_compPlayer);
 	}
 	m_compPlayer.flipCards();
 
