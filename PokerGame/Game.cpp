@@ -4,7 +4,7 @@
 
 Game::Game(const vector<string>& names)
 {
-	const int NUMBER_OF_PLAYERS = 4;
+	//NUMBER_OF_PLAYERS = 4;
 	m_players.reserve(names.size());
 
 	const int COMP_PLAYERS = NUMBER_OF_PLAYERS - names.size();
@@ -85,6 +85,22 @@ void Game::play()
 	clearPlayersHand(m_compPlayers);
 	m_table.clear();
 	m_deck.reset();
+}
+
+void Game::announceWinner(vector<Player>& players, vector<CompPlayer>& compPlayers, Hand& table)
+{
+	vector<GeneralPlayer&> allPlayers;
+	allPlayers.reserve(NUMBER_OF_PLAYERS);
+	int j = 0;
+	for (int i = 0; i < players.size(); ++i)
+	{
+		allPlayers.push_back(players[i]);
+	}
+	for (int i = 0; i < compPlayers.size(); ++i)
+	{
+		allPlayers.push_back(compPlayers[i]);
+	}
+
 }
 
 void Game::clearPlayersHand(vector<Player>& players)
