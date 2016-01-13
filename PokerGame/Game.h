@@ -21,6 +21,9 @@ private:
 	vector<CompPlayer> m_compPlayers;
 	Hand m_table;
 	void compareHands(Player& player, CompPlayer& compPlayer, Hand& table);
+	void clearPlayersHand(vector<Player>& players);
+	void clearPlayersHand(vector<CompPlayer>& players);
+
 
 
 
