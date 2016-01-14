@@ -58,6 +58,7 @@ void GeneralPlayer::getFlushRank(GeneralPlayer::HandRating& handRating, const Ca
 			handRating.kickerRank[j] = i;
 	}
 }
+
 void GeneralPlayer::getHandRank(GeneralPlayer::HandRating& rating)
 {
 	int rankCount[13] = { 0 };
@@ -145,4 +146,270 @@ void GeneralPlayer::getHandRank(GeneralPlayer::HandRating& rating)
 		}
 	}
 
+}
+
+bool operator> (GeneralPlayer& player1, GeneralPlayer& player2)
+{
+	GeneralPlayer::HandRating player1Rating;
+	GeneralPlayer::HandRating player2Rating;
+	player1.getHandRank(player1Rating);
+	player2.getHandRank(player2Rating);
+
+	if (player1Rating.pokerHand == player2Rating.pokerHand) //combinations from strongest to weakest
+	{
+		switch (player1Rating.pokerHand)
+		{
+		case GeneralPlayer::ROYAL_FLUSH:
+			return false;
+			break;
+		case GeneralPlayer::STRAIGHT_FLUSH:
+			if (player1Rating.handRank1 > player2Rating.handRank1) // checks whose show down is in higher ranking
+				return true;
+			else
+				return false;
+			break;
+		case GeneralPlayer::FOUR_OF_KIND:
+			if (player1Rating.handRank1 > player2Rating.handRank1)
+				return true;
+			else if (player1Rating.handRank1 == player2Rating.handRank1)
+			{
+				if (player1Rating.kickerRank > player2Rating.kickerRank)
+					return true;
+				else
+					return false;
+			}
+			return false;
+			break;
+		case GeneralPlayer::FULL_HOUSE:
+			if (player1Rating.handRank1 > player2Rating.handRank1)
+			{
+				return true;
+			}
+			else if (player1Rating.handRank1 == player2Rating.handRank1)
+			{
+				if (player1Rating.handRank2 > player2Rating.handRank2)
+					return true;
+				else
+					return false;
+			}
+			return false;
+			break;
+		case GeneralPlayer::FLUSH:
+			for (int i = 0; i < 5; ++i)
+			{
+				if (player1Rating.kickerRank[i] > player2Rating.kickerRank[i])
+				{
+					return true;
+				}
+			}
+			return false;
+			break;
+		case GeneralPlayer::STRAIGHT:
+			if (player1Rating.handRank1 > player2Rating.handRank1)
+			{
+				return true;
+			}
+			else
+				return false;
+			break;
+		case GeneralPlayer::THREE_OF_KIND:
+			if (player1Rating.handRank1 > player2Rating.handRank1)
+			{
+				return true;
+			}
+			else if (player1Rating.handRank1 == player2Rating.handRank1)
+			{
+				for (int i = 0; i < 2; ++i)
+				{
+					if (player1Rating.kickerRank[i] > player2Rating.kickerRank[i])
+					{
+						return true;
+					}
+
+				}
+				return false;
+			}
+			return false;
+			break;
+		case GeneralPlayer::TWO_PAIR:
+			if (player1Rating.handRank1 > player2Rating.handRank1)
+			{
+				return true;
+			}
+			else if (player1Rating.handRank1 == player2Rating.handRank1)
+			{
+				if (player1Rating.handRank2 > player2Rating.handRank2)
+				{
+					return true;
+				}
+				else if (player1Rating.handRank2 == player2Rating.handRank2)
+				{
+					if (player2Rating.kickerRank[0] > player2Rating.kickerRank[0])
+					{
+						return true;
+					}
+					else
+						return false;
+				}
+
+			}
+			return false;
+			break;
+		case GeneralPlayer::ONE_PAIR:
+			if (player1Rating.handRank1 > player2Rating.handRank1)
+			{
+				return true;
+			}
+			else if (player1Rating.handRank1 == player2Rating.handRank1)
+			{
+				for (int i = 0; i < 3; ++i)
+				{
+					if (player1Rating.kickerRank[i] > player2Rating.kickerRank[i])
+					{
+						return true;
+					}
+
+				}
+			}
+			return false;
+			break;
+		case GeneralPlayer::HIGH_CARD:
+
+			for (int i = 0; i < 5; ++i)
+			{
+				if (player1Rating.kickerRank[i] > player2Rating.kickerRank[i])
+				{
+					return true;
+				}
+			}
+			return false;
+			break;
+		default:
+			return false;
+			break;
+		}
+	}
+	else if (player1Rating.pokerHand > player2Rating.pokerHand)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+bool operator== (GeneralPlayer& player1, GeneralPlayer& player2)
+{
+	GeneralPlayer::HandRating player1Rating;
+	GeneralPlayer::HandRating player2Rating;
+	player1.getHandRank(player1Rating);
+	player2.getHandRank(player2Rating);
+	bool playerWon = true;
+	bool isSplit = false;
+
+	if (player1Rating.pokerHand == player2Rating.pokerHand) //combinations from strongest to weakest
+	{
+		switch (player1Rating.pokerHand)
+		{
+		case GeneralPlayer::ROYAL_FLUSH:
+			return true;
+			break;
+		case GeneralPlayer::STRAIGHT_FLUSH:
+			if (player1Rating.handRank1 == player2Rating.handRank1)
+				return true;
+			else
+				return false;
+			break;
+		case GeneralPlayer::FOUR_OF_KIND:
+			if (player1Rating.handRank1 == player2Rating.handRank1)
+			{
+				if (player1Rating.kickerRank == player2Rating.kickerRank)
+					return true;
+			}
+			return false;
+			break;
+		case GeneralPlayer::FULL_HOUSE:
+			if (player1Rating.handRank1 == player2Rating.handRank1)
+			{
+				if (player1Rating.handRank2 == player2Rating.handRank2)
+					return true;
+			}
+			return false;
+			break;
+		case GeneralPlayer::FLUSH:
+			for (int i = 0; i < 5; ++i)
+			{
+				if (player1Rating.kickerRank[i] != player2Rating.kickerRank[i])
+				{
+					return false;
+				}
+			}
+			return true;
+			break;
+		case GeneralPlayer::STRAIGHT:
+			if (player1Rating.handRank1 == player2Rating.handRank1)
+			{
+				return true;
+			}
+			return false;
+			break;
+		case GeneralPlayer::THREE_OF_KIND:
+			if (player1Rating.handRank1 == player2Rating.handRank1)
+			{
+				for (int i = 0; i < 2; ++i)
+				{
+					if (player1Rating.kickerRank[i] != player2Rating.kickerRank[i])
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			return false;
+			break;
+		case GeneralPlayer::TWO_PAIR:
+			if (player1Rating.handRank1 == player2Rating.handRank1)
+			{
+				if (player1Rating.handRank2 == player2Rating.handRank2)
+				{
+					if (player2Rating.kickerRank[0] == player2Rating.kickerRank[0])
+					{
+						return true;
+					}
+				}
+
+			}
+			return false;
+			break;
+		case GeneralPlayer::ONE_PAIR:
+			if (player1Rating.handRank1 == player2Rating.handRank1)
+			{
+				for (int i = 0; i < 3; ++i)
+				{
+					if (player1Rating.kickerRank[i] != player2Rating.kickerRank[i])
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			break;
+		case GeneralPlayer::HIGH_CARD:
+
+			for (int i = 0; i < 5; ++i)
+			{
+				if (player1Rating.kickerRank[i] != player2Rating.kickerRank[i])
+				{
+					return false;
+				}
+			}
+			return true;
+			break;
+		default:
+			return false;
+			break;
+		}
+	}
 }

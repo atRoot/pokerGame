@@ -3,14 +3,13 @@
 #include "Deck.h"
 #include "Player.h"
 #include "CompPlayer.h"
+#include <functional>
 
 class Game
 {
 public:
 	friend ostream& operator<< (ostream& os, const Card& aCard);
-	friend bool operator> (GeneralPlayer& player1, GeneralPlayer& player2);
-	friend bool operator== (GeneralPlayer& player1, GeneralPlayer& player2);
-
+	
 	Game(const vector<string>& names);
 	~Game();
 
@@ -21,16 +20,15 @@ private:
 	const int NUMBER_OF_PLAYERS = 4;
 	//Player m_player;
 	//CompPlayer m_compPlayer;
-	vector<Player> m_players;
-	vector<CompPlayer> m_compPlayers;
+	vector<GeneralPlayer*> m_players;
+	vector<GeneralPlayer*> m_compPlayers;
 	Hand m_table;
 	GeneralPlayer* compareHands(Player& player, CompPlayer& compPlayer, Hand& table);
-	void clearPlayersHand(vector<Player>& players);
-	void clearPlayersHand(vector<CompPlayer>& players);
-	void announceWinner(vector<Player> players, vector<CompPlayer> compPlayers, Hand table);
-
-
-
+	//void clearPlayersHand(vector<Player>& players);
+	//void clearPlayersHand(vector<CompPlayer>& players);
+	void announceWinner(vector<GeneralPlayer*> players, vector<GeneralPlayer*> compPlayers, Hand table);
+	void clearPlayersHand(vector<GeneralPlayer*>& players);
+	void clear(vector<GeneralPlayer*>& players);
 
 };
 

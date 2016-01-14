@@ -5,6 +5,9 @@ class GeneralPlayer :
 {
 	friend ostream& operator<<(ostream& os,
 		const GeneralPlayer& aGeneralPlayer);
+	friend bool operator> (GeneralPlayer& player1, GeneralPlayer& player2);
+	friend bool operator== (GeneralPlayer& player1, GeneralPlayer& player2);
+
 
 public:
 	enum HandRanking {HIGH_CARD, ONE_PAIR, TWO_PAIR, THREE_OF_KIND,

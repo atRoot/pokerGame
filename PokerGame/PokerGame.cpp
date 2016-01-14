@@ -13,12 +13,30 @@ ostream& operator<<(ostream& os, const GeneralPlayer& aGeneralPlayer);
 ostream& operator<<(ostream& os, const Hand& aHand);
 int _tmain(int argc, _TCHAR* argv[])
 {
-	string myName;
+	int numOfPlayers = 0;
+	vector<string> playerNames;
+	string name;
 	cout << "Welcome to pocker game" << endl;
-	cout << "Enter your name: ";
-	cin >> myName;
-	cout << '\n' << "Hi " << myName << endl;
-	Game aGame(myName);
+	while (1)
+	{
+		cout << "How many Players? (1-4)" << endl;
+		cin >> numOfPlayers;
+		if (numOfPlayers&& numOfPlayers <= 4)
+			break;
+		else
+		{
+			cout << "Invalid amount of players" << endl;
+		}
+	}
+	playerNames.reserve(numOfPlayers);
+	cout << "Enter player name: ";
+	for (int i = 0; i < numOfPlayers; ++i)
+	{
+		cin >> name;
+		playerNames.push_back(name);
+	}	
+	cout << '\n' << "Hi!" << endl;
+	Game aGame(playerNames);
 
 	char again = 'y';
 	while (again != 'n')
