@@ -11,14 +11,7 @@ Player::~Player()
 {
 }
 
-void Player::win() const
-{
-	cout << m_name << " wins" << endl;
-}
-void Player::loose() const
-{
-	cout << m_name << " loose" << endl;
-}
+
 
 int Player::bidding()
 {

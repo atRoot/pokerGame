@@ -8,6 +8,9 @@ class Game
 {
 public:
 	friend ostream& operator<< (ostream& os, const Card& aCard);
+	friend bool operator> (GeneralPlayer& player1, GeneralPlayer& player2);
+	friend bool operator== (GeneralPlayer& player1, GeneralPlayer& player2);
+
 	Game(const vector<string>& names);
 	~Game();
 
@@ -21,10 +24,10 @@ private:
 	vector<Player> m_players;
 	vector<CompPlayer> m_compPlayers;
 	Hand m_table;
-	void compareHands(Player& player, CompPlayer& compPlayer, Hand& table);
+	GeneralPlayer* compareHands(Player& player, CompPlayer& compPlayer, Hand& table);
 	void clearPlayersHand(vector<Player>& players);
 	void clearPlayersHand(vector<CompPlayer>& players);
-	void announceWinner(vector<Player>& players, vector<CompPlayer>& compPlayers, Hand& table);
+	void announceWinner(vector<Player> players, vector<CompPlayer> compPlayers, Hand table);
 
 
 

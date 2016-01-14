@@ -7,7 +7,6 @@ public:
 	Player(const string& name ="");
 	virtual ~Player();
 	virtual int bidding();
-	void win() const;
-	void loose() const;
+
 };
 

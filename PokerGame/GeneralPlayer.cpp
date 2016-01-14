@@ -10,6 +10,15 @@ GeneralPlayer::~GeneralPlayer()
 {
 }
 
+void GeneralPlayer::win() const
+{
+	cout << m_name << " wins" << endl;
+}
+void GeneralPlayer::loose() const
+{
+	cout << m_name << " loose" << endl;
+}
+
 void GeneralPlayer::flipCards()
 {
 	if (!m_cards.empty())
@@ -27,47 +36,29 @@ void GeneralPlayer::fold() const
 {
 	cout << m_name << "folded" << endl;
 }
-void GeneralPlayer::countRanks(int rankCount[], Hand& table)
+void GeneralPlayer::countRanks(int rankCount[])
 {
-	vector<Card*> tableCards;
-	tableCards = table.getHand();
-
 	for (int i = 0; i < m_cards.size(); ++i)
 	{
 		rankCount[m_cards[i]->getRank()]++;
 	}
-	for (int i = 0; i < tableCards.size(); ++i)
-	{
-		rankCount[tableCards[i]->getRank()];
-	}
 }
-void GeneralPlayer::countSuits(int suitCount[], Hand& table)
+void GeneralPlayer::countSuits(int suitCount[])
 {
-	vector<Card*> tableCards;
-	tableCards = table.getHand();
-
 	for (int i = 0; i < m_cards.size(); ++i)
 	{
 		suitCount[m_cards[i]->getSuit()];
 	}
-	for (int i = 0; i < tableCards.size(); ++i)
-	{
-		suitCount[tableCards[i]->getSuit()];
-	}
 }
-void GeneralPlayer::getFlushRank(Hand& table, GeneralPlayer::HandRating& handRating, const Card::suit suit)
+void GeneralPlayer::getFlushRank(GeneralPlayer::HandRating& handRating, const Card::suit suit)
 {
-	Hand showDownHand;
-	showDownHand.add(m_cards);
-	showDownHand.add(table.getHand());
-	vector<Card*> showDownCards = showDownHand.getHand();
 	for (int i = 12, j = 0; j < 5; ++j)
 	{
-		if (showDownCards[i]->getSuit() == suit)
+		if (m_cards[i]->getSuit() == suit)
 			handRating.kickerRank[j] = i;
 	}
 }
-void GeneralPlayer::getHandRank(Hand& table, GeneralPlayer::HandRating& rating)
+void GeneralPlayer::getHandRank(GeneralPlayer::HandRating& rating)
 {
 	int rankCount[13] = { 0 };
 	int suitCount[4] = { 0 };
@@ -78,8 +69,8 @@ void GeneralPlayer::getHandRank(Hand& table, GeneralPlayer::HandRating& rating)
 	int three = -1;
 	int four = -1;
 	int straightPos = -1;
-	countRanks(rankCount, table);
-	countSuits(suitCount, table);
+	countRanks(rankCount);
+	countSuits(suitCount);
 
 	for (int i = 12, j = 0; j != 5; --i, ++j)
 	{
@@ -144,7 +135,7 @@ void GeneralPlayer::getHandRank(Hand& table, GeneralPlayer::HandRating& rating)
 		if (suitCount[i] == 5)
 		{
 			rating.pokerHand = FLUSH;
-			getFlushRank(table, rating, static_cast<Card::suit>(i));
+			getFlushRank(rating, static_cast<Card::suit>(i));
 			if (straightPos >= 0)
 			{
 				rating.pokerHand = STRAIGHT_FLUSH;

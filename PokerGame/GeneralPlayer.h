@@ -11,9 +11,9 @@ public:
 	STRAIGHT, FLUSH, FULL_HOUSE, FOUR_OF_KIND, STRAIGHT_FLUSH, ROYAL_FLUSH};
 	struct HandRating
 	{
-		int pokerHand;
 		int handRank1;
 		int handRank2;
+		int pokerHand;
 		int kickerRank[5];
 	};
 
@@ -26,11 +26,15 @@ public:
 
 protected:
 	string m_name;
-	void countRanks(int rankCount[], Hand& table);
-	void countSuits(int suitCount[], Hand& table);
-	void getFlushRank(Hand& table, GeneralPlayer::HandRating& handRating, Card::suit);
+	void countRanks(int rankCount[]);
+	void countSuits(int suitCount[]);
+	void getFlushRank(GeneralPlayer::HandRating& handRating, Card::suit);
+	//int m_pokerHand;
+	//int m_kickerRank;
 	//HandRanking handRanking;
 public:
-	void getHandRank(Hand& table, HandRating& handRaiting);
+	void getHandRank(HandRating& handRaiting);
+	void win() const;
+	void loose() const;
 };
 
