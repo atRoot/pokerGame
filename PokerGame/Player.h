@@ -5,7 +5,7 @@ class Player :
 {
 public:
 	Player(const string& name ="");
-	Player(const Player& player);
+	//Player(const Player& player);
 	virtual ~Player();
 	virtual int bidding();
 

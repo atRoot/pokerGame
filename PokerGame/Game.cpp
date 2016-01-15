@@ -4,6 +4,7 @@
 
 Game::Game(const vector<string>& names)
 {
+	cout << "game constructor called" << endl;
 	//NUMBER_OF_PLAYERS = 4;
 	m_players.reserve(names.size());
 
@@ -109,6 +110,10 @@ void Game::announceWinner(vector<Player>& players, vector<CompPlayer>& compPlaye
 	}
 	std::sort(allPlayers.begin(), allPlayers.end(), compareGreaterThan); // greaterThan is a friend of GeneralPlayer
 	//clear(allPlayers);
+	if (compareEquals(allPlayers[0], allPlayers[1]))
+		cout << "It is a split" <<endl << *allPlayers[0] << endl<< *allPlayers[1]<< endl;
+	else
+		allPlayers[0]->win();
 }
 
 void Game::clearPlayersHand(vector<GeneralPlayer*>& players)

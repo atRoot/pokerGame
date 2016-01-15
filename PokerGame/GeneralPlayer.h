@@ -8,6 +8,8 @@ class GeneralPlayer :
 	//friend bool operator> (GeneralPlayer& player1, GeneralPlayer& player2);
 	//friend bool operator== (GeneralPlayer& player1, GeneralPlayer& player2);
 	friend bool compareGreaterThan(GeneralPlayer *player1, GeneralPlayer *player2);
+	friend bool compareEquals(GeneralPlayer* player1, GeneralPlayer* player2);
+
 
 
 public:
@@ -22,7 +24,6 @@ public:
 	};
 
 	GeneralPlayer(const string& name = "");
-	GeneralPlayer(const GeneralPlayer& player);
 	virtual ~GeneralPlayer();
 
 	virtual int bidding() = 0; // const?
@@ -34,8 +35,8 @@ protected:
 	void countRanks(int rankCount[]);
 	void countSuits(int suitCount[]);
 	void getFlushRank(GeneralPlayer::HandRating& handRating, Card::suit);
-	bool compGreaterThan(GeneralPlayer *player1, GeneralPlayer *player2);
-	bool compEquals(GeneralPlayer *player1, GeneralPlayer *player2);
+	//bool compGreaterThan(GeneralPlayer *player1, GeneralPlayer *player2);
+	//bool compEquals(GeneralPlayer *player1, GeneralPlayer *player2);
 	//int m_pokerHand;
 	//int m_kickerRank;
 	//HandRanking handRanking;
