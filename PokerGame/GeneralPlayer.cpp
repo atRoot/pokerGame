@@ -5,6 +5,11 @@
 GeneralPlayer::GeneralPlayer(const string& name) : m_name(name)
 {
 }
+GeneralPlayer::GeneralPlayer(const GeneralPlayer& player)
+{
+	m_cards = player.m_cards;
+	m_name = player.m_name;
+}
 
 GeneralPlayer::~GeneralPlayer()
 {
@@ -147,13 +152,13 @@ void GeneralPlayer::getHandRank(GeneralPlayer::HandRating& rating)
 	}
 
 }
-
-bool operator> (GeneralPlayer& player1, GeneralPlayer& player2)
+bool compareGreaterThan(GeneralPlayer *player1, GeneralPlayer *player2)
 {
+	
 	GeneralPlayer::HandRating player1Rating;
 	GeneralPlayer::HandRating player2Rating;
-	player1.getHandRank(player1Rating);
-	player2.getHandRank(player2Rating);
+	player1->getHandRank(player1Rating);
+	player2->getHandRank(player2Rating);
 
 	if (player1Rating.pokerHand == player2Rating.pokerHand) //combinations from strongest to weakest
 	{
@@ -299,13 +304,13 @@ bool operator> (GeneralPlayer& player1, GeneralPlayer& player2)
 	}
 }
 
-
-bool operator== (GeneralPlayer& player1, GeneralPlayer& player2)
+bool GeneralPlayer::compEquals(GeneralPlayer *player1, GeneralPlayer *player2)
 {
+
 	GeneralPlayer::HandRating player1Rating;
 	GeneralPlayer::HandRating player2Rating;
-	player1.getHandRank(player1Rating);
-	player2.getHandRank(player2Rating);
+	player1->getHandRank(player1Rating);
+	player2->getHandRank(player2Rating);
 	bool playerWon = true;
 	bool isSplit = false;
 
@@ -412,4 +417,14 @@ bool operator== (GeneralPlayer& player1, GeneralPlayer& player2)
 			break;
 		}
 	}
+}
+bool operator> (GeneralPlayer& player1, GeneralPlayer& player2)
+{
+	return false;
+}
+
+
+bool operator== (GeneralPlayer& player1, GeneralPlayer& player2)
+{
+	return false;
 }

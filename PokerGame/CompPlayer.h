@@ -5,6 +5,7 @@ class CompPlayer :
 {
 public:
 	CompPlayer(const string& name ="");
+	CompPlayer(const CompPlayer& compPlayer);
 	virtual int bidding();
 	~CompPlayer();
 };
