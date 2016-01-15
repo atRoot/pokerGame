@@ -244,7 +244,7 @@ bool compareGreaterThan(GeneralPlayer *player1, GeneralPlayer *player2)
 				}
 				else if (player1Rating.handRank2 == player2Rating.handRank2)
 				{
-					if (player2Rating.kickerRank[0] > player2Rating.kickerRank[0])
+					if (player1Rating.kickerRank[0] > player2Rating.kickerRank[0])
 					{
 						return true;
 					}
@@ -268,7 +268,6 @@ bool compareGreaterThan(GeneralPlayer *player1, GeneralPlayer *player2)
 					{
 						return true;
 					}
-
 				}
 			}
 			return false;
@@ -393,6 +392,7 @@ bool compareEquals(GeneralPlayer *player1, GeneralPlayer *player2)
 				}
 				return true;
 			}
+			return false;
 			break;
 		case GeneralPlayer::HIGH_CARD:
 
