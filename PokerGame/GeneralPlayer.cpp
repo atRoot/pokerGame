@@ -207,7 +207,7 @@ bool operator> (GeneralPlayer& player1, GeneralPlayer& player2)
 bool operator< (GeneralPlayer& player1, GeneralPlayer& player2)
 {
 	Hand::HandRating player1Rating = { -1, { -1, -1, -1, -1, -1 }, { -1, -1 } }; // init struct members
-	Hand::HandRating player2Rating = { -1, { -1, -1, -1, -1, -1 }, { -1, -1 } };
+	Hand::HandRating player2Rating = { -1, { -1, -1, -1, -1, -1 }, { -1, -1 } }; // init struct members
 	//Hand::HandRating tableRating = { -1, { -1, -1, -1, -1, -1 }, { -1, -1 } };
 	//Hand& table = player1.getTable();
 	//table.getHandRank(tableRating); // a work around to get a object member to static function
