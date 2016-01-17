@@ -13,12 +13,12 @@ Game::Game(const vector<string>& names)
 
 	for (int i =0; i< names.size(); ++i)
 	{
-		m_players.push_back(Player(names[i]));
+		m_players.push_back(Player(m_table ,names[i]));
 	}
 	for (int i = 0; i < COMP_PLAYERS; ++i)
 	{
 		string compPlayerName = "Comp player " + std::to_string(i);
-		m_compPlayers.push_back(CompPlayer(compPlayerName));
+		m_compPlayers.push_back(CompPlayer(m_table, compPlayerName));
 	}
 	srand(static_cast<unsigned int>(time(0)));
 	m_deck.reset();
@@ -83,7 +83,7 @@ void Game::play()
 	}
 
 	//compareHands(m_player, m_compPlayer, m_table);
-	announceWinner(m_players, m_compPlayers, m_table);
+	announceWinner(m_players, m_compPlayers);
 
 	clearPlayersHand(m_players);
 	clearPlayersHand(m_compPlayers);
@@ -91,29 +91,41 @@ void Game::play()
 	m_deck.reset();
 }
 
-void Game::announceWinner(vector<Player>& players, vector<CompPlayer>& compPlayers, Hand& table)
+void Game::announceWinner(vector<Player>& players, vector<CompPlayer>& compPlayers)
 {
-	vector<GeneralPlayer*> allPlayers;
-	allPlayers.reserve(NUMBER_OF_PLAYERS);
-	for (int i = 0; i < players.size(); ++i)
+	bool playersSplit = false;
+	bool compPlayersSplit = false;
+	vector<Player>::iterator player = max_element(players.begin(), players.end());
+	vector<CompPlayer>::iterator compPlayer = max_element(compPlayers.begin(), compPlayers.end());
+	if (player+1 != players.end())
 	{
-		allPlayers.push_back(new Player(players[i]));
+		if (*player == *(player + 1))
+			playersSplit = true;
 	}
-	for (int i = 0; i < compPlayers.size(); ++i)
+
+	if (compPlayer + 1 != compPlayers.end())
 	{
-		allPlayers.push_back(new CompPlayer(compPlayers[i]));
+		if (*compPlayer == *(compPlayer + 1))
+			compPlayersSplit = true;
 	}
-	//const int ALL_PLAYER_SIZE = allPlayers.size();
-	for (int i = 0; i < allPlayers.size(); ++i)
+
+	if (*player > *compPlayer)
 	{
-		allPlayers[i]->add(table.getHand());
+		if (playersSplit)
+			cout << "Its a split!" << endl;
+		else
+			(*player).win();
 	}
-	std::sort(allPlayers.begin(), allPlayers.end(), compareGreaterThan); // greaterThan is a friend of GeneralPlayer
-	//clear(allPlayers);
-	if (compareEquals(allPlayers[0], allPlayers[1]))
-		cout << "It is a split" <<endl << *allPlayers[0] << endl<< *allPlayers[1]<< endl;
+	
+	else if (*player == *compPlayer)
+		cout << "Its a split!" << endl;
 	else
-		allPlayers[0]->win();
+	{
+		if (compPlayersSplit)
+			cout << "Its a split!" << endl;
+		else
+			(*compPlayer).win();
+	}
 }
 
 void Game::clearPlayersHand(vector<GeneralPlayer*>& players)

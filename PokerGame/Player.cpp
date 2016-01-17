@@ -2,8 +2,8 @@
 #include "Player.h"
 
 
-Player::Player(const string& name):
-	GeneralPlayer(name)
+Player::Player(Hand& table, const string& name):
+	GeneralPlayer(table, name)
 {
 	cout << "Player reg const called" << endl;
 }

@@ -4,7 +4,7 @@ class CompPlayer :
 	public GeneralPlayer
 {
 public:
-	CompPlayer(const string& name ="");
+	CompPlayer(Hand& table, const string& name ="");
 	//CompPlayer(const CompPlayer& compPlayer);
 	virtual int bidding();
 	~CompPlayer();

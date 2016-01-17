@@ -2,7 +2,7 @@
 #include "CompPlayer.h"
 
 
-CompPlayer::CompPlayer(const string& name) :GeneralPlayer(name)
+CompPlayer::CompPlayer(Hand& table, const string& name) :GeneralPlayer(table, name)
 {
 }
 //CompPlayer::CompPlayer(const CompPlayer& compPlayer)

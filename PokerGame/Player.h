@@ -4,7 +4,7 @@ class Player :
 	public GeneralPlayer
 {
 public:
-	Player(const string& name ="");
+	Player(Hand& table, const string& name = "");
 	//Player(const Player& player);
 	virtual ~Player();
 	virtual int bidding();

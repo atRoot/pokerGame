@@ -4,12 +4,13 @@
 #include "Player.h"
 #include "CompPlayer.h"
 #include <functional>
+#include <algorithm>
 
 class Game
 {
-public:
 	friend ostream& operator<< (ostream& os, const Card& aCard);
-	
+
+public:
 	Game(const vector<string>& names);
 	~Game();
 
@@ -26,7 +27,7 @@ private:
 	GeneralPlayer* compareHands(Player& player, CompPlayer& compPlayer, Hand& table);
 	void clearPlayersHand(vector<Player>& players);
 	void clearPlayersHand(vector<CompPlayer>& players);
-	void announceWinner(vector<Player>& players, vector<CompPlayer>& compPlayers, Hand& table);
+	void announceWinner(vector<Player>& players, vector<CompPlayer>& compPlayers);
 	void clearPlayersHand(vector<GeneralPlayer*>& players);
 	void clear(vector<GeneralPlayer*>& players);
 
