@@ -209,7 +209,6 @@ bool operator< (GeneralPlayer& player1, GeneralPlayer& player2)
 	Hand::HandRating player1Rating = { -1, { -1, -1, -1, -1, -1 }, { -1, -1 } }; // init struct members
 	Hand::HandRating player2Rating = { -1, { -1, -1, -1, -1, -1 }, { -1, -1 } }; // init struct members
 	//Hand::HandRating tableRating = { -1, { -1, -1, -1, -1, -1 }, { -1, -1 } };
-	//Hand& table = player1.getTable();
 	player1.getHandRank(player1Rating);
 	player2.getHandRank(player2Rating);
 
