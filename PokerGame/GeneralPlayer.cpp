@@ -173,7 +173,7 @@ void GeneralPlayer::getHandRank(Hand::HandRating& rating)
 
 	for (int i = 0; i < SUIT_COUNT; ++i)
 	{
-		if (suitCount[i] == 5)
+		if (suitCount[i] >= 5)
 		{
 			rating.pokerHand = FLUSH;
 			getFlushRank(rating, static_cast<Card::suit>(i));
